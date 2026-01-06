@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Loan - ShriNeo Vittiyam</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background: rgba(255,255,255,0.9);
+            margin-top: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-blobs"></div>
+
+    <nav class="glass glass-nav">
+        <div class="logo">
+            <img src="assets/logo.png" alt="" style="height: 50px; width: auto;">
+            <span>ShriNeo Vittiyam</span>
+        </div>
+    </nav>
+
+    <script src="js/features.js"></script>
+
+    <main class="auth-container" style="align-items: flex-start; padding-top: 6rem;">
+        <div class="glass auth-card" style="max-width: 800px; margin: 0 auto;">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step-indicator active">1</div>
+                    <div class="step-indicator">2</div>
+                    <div class="step-indicator">3</div>
+                    <div class="step-indicator">4</div>
+                </div>
+                <div class="progress-line-bg"></div>
+                <div id="progress-fill" class="progress-line-fill"></div>
+            </div>
+
+            <form id="loan-form">
+                <!-- Step 1: Personal Details -->
+                <div class="form-step active">
+                    <h2 class="section-title-small">Personal Details</h2>
+                    <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="fullName" placeholder="e.g. Raj Kumar" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" placeholder="+91..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>PAN Card</label>
+                            <input type="text" name="pan" placeholder="ABCDE1234F" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Type of Loan</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="loanType" value="Personal Loan" required style="width: auto; margin: 0;"> Personal Loan
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="loanType" value="Business Loan" style="width: auto; margin: 0;"> Business Loan
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="loanType" value="Mortgage Loan" style="width: auto; margin: 0;"> Mortgage Loan
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="loanType" value="Home Loan" style="width: auto; margin: 0;"> Home Loan
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 1rem; padding: 1rem; background: rgba(37, 99, 235, 0.05); border-radius: 0.5rem; border: 1px solid rgba(37, 99, 235, 0.1);">
+                        <label style="display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="video-consent" name="videoConsent" required style="width: auto; margin-top: 4px;">
+                            <span style="font-size: 0.9rem; color: #1e293b;">
+                                <strong>Enable Secure Identity Verification:</strong> I consent to real-time face verification in the background to speed up my application and prevent identity theft.
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="button" class="hero-cta next-btn">Next Step &rarr;</button>
+                </div>
+
+                <!-- Step 2: Financial Details -->
+                <div class="form-step">
+                    <h2 class="section-title-small">Employment & Finances</h2>
+                    <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Employment Type</label>
+                            <select id="employment" name="employmentType" required>
+                                <option value="Salaried">Salaried</option>
+                                <option value="Self-Employed">Self-Employed</option>
+                                <option value="Business">Business Owner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Monthly Income (₹)</label>
+                            <input type="number" id="income" name="income" placeholder="e.g. 50000" required>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Loan Amount Needed (₹)</label>
+                            <input type="number" id="amount" name="amount" placeholder="e.g. 500000" required>
+                        </div>
+                    </div>
+                    <div class="btn-group" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button type="button" class="btn-outline prev-btn" style="border-color: #cbd5e1; color: #64748B;">Back</button>
+                        <button type="button" class="hero-cta next-btn" onclick="generateMockOffers()">Check Offers &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Offer Selection (NEW) -->
+                <div class="form-step">
+                    <h2 class="section-title-small">Select Your Lender</h2>
+                    <p style="text-align: center; color: #64748B; margin-bottom: 1.5rem;">Great news! You are eligible for the following offers.</p>
+                    
+                    <div id="offer-list" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                        <!-- Offers will be injected here by JS -->
+                        <div style="padding: 2rem; text-align: center; color: #64748B;">
+                            Loading best offers for you...
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" name="selectedLender" id="selectedLender">
+                    <input type="hidden" name="selectedInterest" id="selectedInterest">
+
+                    <div class="btn-group" style="display: flex; gap: 1rem;">
+                         <button type="button" class="btn-outline prev-btn" style="border-color: #cbd5e1; color: #64748B;">Back</button>
+                        <button type="button" class="hero-cta next-btn" disabled id="offer-next-btn">Proceed to KYC &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Final Review -->
+                <div class="form-step">
+                    <h2 class="section-title-small">Final Review</h2>
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 1rem; text-align: left; margin-bottom: 2rem;">
+                        <p><strong>Name:</strong> <span id="review-name">-</span></p>
+                        <p><strong>Loan Type:</strong> <span id="review-type" style="color: #2563EB; font-weight: 500;">-</span></p>
+                        <p><strong>Loan Amount:</strong> ₹<span id="review-amount">-</span></p>
+                        <p><strong>Selected Lender:</strong> <span id="review-lender" style="color: #2563EB; font-weight: bold;">-</span></p>
+                        <p><strong>Interest Rate:</strong> <span id="review-interest">-</span>%</p>
+                        <p><strong>EMI (Approx):</strong> ₹<span id="review-emi">-</span>/mo</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label style="display: flex; align-items: start; gap: 0.5rem;">
+                            <input type="checkbox" required style="width: auto; margin-top: 5px;">
+                            <span style="font-size: 0.9rem;">I agree to share my documents with the selected lender and accept the Terms & Conditions.</span>
+                        </label>
+                    </div>
+
+                    <div class="btn-group" style="display: flex; gap: 1rem;">
+                        <button type="button" class="btn-outline prev-btn" style="border-color: #cbd5e1; color: #64748B;">Back</button>
+                        <button type="submit" class="hero-cta" style="width: 100%;">Submit Application</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Hidden Video for background verification -->
+    <div style="display: none;">
+        <video id="verify-video" width="320" height="240" autoplay muted playsinline></video>
+        <canvas id="verify-canvas" width="320" height="240"></canvas>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/apply.js"></script>
+    <script src="js/fraud_monitor.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

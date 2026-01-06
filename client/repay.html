@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repay Loan - ShriNeo Vittiyam</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .repay-container {
+            max-width: 500px;
+            margin: 6rem auto;
+            text-align: center;
+        }
+        .due-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .due-amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        .upi-btn {
+            background: #2563EB;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .upi-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass glass-nav" style="background: white;">
+        <div class="logo">
+            <span style="color: #1e293b;">ShriNeo Vittiyam</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item" style="color: #1e293b;">Back to Home</a>
+        </div>
+    </nav>
+
+    <main class="repay-container">
+        <h1 style="margin-bottom: 2rem; color: #1e293b;">Loan Repayment</h1>
+        
+        <div class="due-card">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('assets/pattern.png'); opacity: 0.1;"></div>
+            
+            <p style="font-size: 1.1rem; opacity: 0.8;">Upcoming EMI Due</p>
+            <div class="due-amount">₹ 14,850</div>
+            <p style="opacity: 0.6; font-size: 0.9rem;">Due Date: Jan 10, 2026</p>
+
+            <button class="upi-btn" onclick="openModal()">
+                <span>⚡ Pay via UPI</span>
+            </button>
+        </div>
+
+        <p style="margin-top: 2rem; color: #64748B;">Secured by BHIM UPI</p>
+    </main>
+
+    <div class="modal-overlay" id="upiModal">
+        <div class="modal">
+            <h3 style="color: #1e293b; margin-bottom: 1.5rem;">Scan to Pay</h3>
+            <div style="background: white; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 1rem; display: inline-block; margin-bottom: 1.5rem;">
+                <!-- QR Code Placeholder -->
+               <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=neovittyam@upi&pn=ShriNeoVittiyam&am=14850&cu=INR" alt="UPI QR" style="width: 200px; height: 200px; display: block;">
+            </div>
+            <p style="color: #64748B; margin-bottom: 2rem;">Processing payment of <strong>₹ 14,850</strong></p>
+            <button onclick="closeModal()" style="background: none; border: none; color: #EF4444; font-weight: 600; cursor: pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script>
+        function openModal() {
+            document.getElementById('upiModal').style.display = 'flex';
+            
+            // Mock Success logic
+            setTimeout(() => {
+                // If this were real, we'd listen for socket/webhook
+            }, 5000);
+        }
+
+        function closeModal() {
+            document.getElementById('upiModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard - ShriNeo Vittiyam</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: #1e293b;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        }
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 2rem 3rem;
+            width: calc(100% - 260px);
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .sidebar-link.active, .sidebar-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .lead-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .lead-table th, .lead-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .status-pending { background: #fff7ed; color: #c2410c; }
+        .status-approved { background: #f0fdf4; color: #15803d; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="padding: 2rem 1.5rem;">
+                <div class="auth-logo" style="margin: 0 auto 1.5rem; width: 60px; height: 60px; font-size: 1.5rem; background: rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; border-radius:50%;">SV</div>
+                <h3 style="text-align: center; margin-bottom: 0.5rem; font-weight: 600;">Agent Portal</h3>
+                <p style="text-align: center; font-size: 0.8rem; opacity: 0.6; margin-bottom: 2rem;">Partner Network</p>
+                
+                <nav>
+                    <a href="#" class="sidebar-link active" data-view="overview">Overview</a>
+                    <a href="#" class="sidebar-link" data-view="leads">My Leads</a>
+                    <a href="#" class="sidebar-link" data-view="commissions">Commissions</a>
+                    <a href="#" class="sidebar-link" data-view="marketing">Marketing Kit</a>
+                    <a href="#" class="sidebar-link" data-view="training">Training</a>
+                    <a href="index.html" class="sidebar-link" style="margin-top: 1rem; color: #94a3b8;">← Back to Home</a>
+                </nav>
+            </div>
+
+            <div style="margin-top: auto; padding: 1.5rem;">
+                <button onclick="logout()" class="sidebar-link" style="width: 100%; text-align: left; border: none; background: rgba(255,255,255,0.05); color: #EF4444; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem;">
+                <div>
+                    <h1 style="font-size: 2.2rem; color: #0f172a; font-weight: 700;">Welcome back, Rahul</h1>
+                    <p style="color: #64748B; margin-top: 0.5rem; font-size: 1.05rem;">Agent ID: <span id="agent-id-display" style="font-family: monospace; background: #e2e8f0; padding: 2px 6px; border-radius: 4px;">AGT-8821</span></p>
+                </div>
+                <button class="hero-cta" style="padding: 0.8rem 1.5rem; font-size: 1rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);">+ New Loan Application</button>
+            </header>
+
+            <!-- VIEW: OVERVIEW -->
+            <div id="view-overview" class="dashboard-view">
+                <!-- Stats Grid -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <p style="color: #64748B; font-size: 0.9rem;">Total Earnings</p>
+                        <h2 id="total-earnings" style="font-size: 2rem; color: #0f172a; margin: 0.5rem 0;">₹ 0</h2>
+                        <p style="color: #10B981; font-size: 0.9rem;">+ ₹2,400 this month</p>
+                    </div>
+                    <div class="stat-card">
+                        <p style="color: #64748B; font-size: 0.9rem;">Active Leads</p>
+                        <h2 id="active-leads" style="font-size: 2rem; color: #0f172a; margin: 0.5rem 0;">0</h2>
+                        <p style="color: #3B82F6; font-size: 0.9rem;">Targets on track</p>
+                    </div>
+                    <div class="stat-card">
+                        <p style="color: #64748B; font-size: 0.9rem;">Conversion Rate</p>
+                        <h2 style="font-size: 2rem; color: #0f172a; margin: 0.5rem 0;">64%</h2>
+                        <p style="color: #64748B; font-size: 0.9rem;">High Performing</p>
+                    </div>
+                </div>
+
+                <!-- Recent Leads -->
+                <h3 style="margin-bottom: 1rem; color: #0f172a;">Recent Applications</h3>
+                <div style="overflow-x: auto;">
+                    <table class="lead-table">
+                        <thead>
+                            <tr>
+                                <th>Applicant Name</th>
+                                <th>Loan Type</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body">
+                            <!-- Populated by JS -->
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">Loading Data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ID Card Mock -->
+                <div style="margin-top: 3rem; background: #e0e7ff; padding: 2rem; border-radius: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <h3 style="color: #3730a3;">Your Digital Agent ID</h3>
+                        <p style="color: #4338ca; margin-top: 0.5rem; max-width: 500px;">
+                            Show this ID to build trust with customers. It verifies your status as an official "Sahayak" of ShriNeo Vittiyam.
+                        </p>
+                    </div>
+                    <button id="download-id-btn" class="btn-outline" style="background: white; border-color: white; color: #4338ca;">Download ID Card</button>
+                </div>
+            </div>
+
+            <!-- VIEW: LEADS -->
+            <div id="view-leads" class="dashboard-view hidden">
+                <h2 style="margin-bottom: 1.5rem;">All Leads</h2>
+                <div class="glass" style="padding: 1.5rem; border-radius: 1rem;">
+                    <!-- We'll replicate the table here for full view -->
+                    <div style="overflow-x: auto;">
+                        <table class="lead-table">
+                            <thead>
+                                <tr><th>Applicant</th><th>Type</th><th>Amount</th><th>Status</th><th>Commission</th></tr>
+                            </thead>
+                            <tbody id="all-leads-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: COMMISSIONS -->
+            <div id="view-commissions" class="dashboard-view hidden">
+                <h2 style="margin-bottom: 1.5rem;">Earnings & Payouts</h2>
+                <div style="background: white; padding: 2rem; border-radius: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
+                         <span>Pending Payout</span>
+                         <span style="font-weight: bold; color: #10B981;">₹ 4,500</span>
+                    </div>
+                    <button class="hero-cta" style="width: 100%;">Withdraw to Bank Account</button>
+                </div>
+            </div>
+
+            <!-- VIEW: MARKETING -->
+            <div id="view-marketing" class="dashboard-view hidden">
+                <h2 style="margin-bottom: 1.5rem;">Marketing Kit</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                    <div class="stat-card" style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+                        <h3>Social Media Post</h3>
+                        <p style="color: #64748B; margin-bottom: 1rem;">"Need a Loan?" template</p>
+                        <button class="btn-outline">Download .JPG</button>
+                    </div>
+                     <div class="stat-card" style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+                        <h3>Pamphlet Design</h3>
+                        <p style="color: #64748B; margin-bottom: 1rem;">A4 Printable PDF</p>
+                        <button class="btn-outline">Download .PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: TRAINING -->
+            <div id="view-training" class="dashboard-view hidden">
+                 <h2 style="margin-bottom: 1.5rem;">Sahayak Training</h2>
+                 <div class="stat-card" style="display: flex; gap: 1rem; align-items: center;">
+                     <div style="width: 120px; height: 80px; background: #000; color: white; display: flex; align-items: center; justify-content: center;">▶ VIDEO</div>
+                     <div>
+                         <h4>How to onboard a customer?</h4>
+                         <p style="color: #64748B;">Duration: 5 mins</p>
+                     </div>
+                 </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script>APP.requireAuth();</script>
+    <script src="js/agent_dashboard.js"></script>
+</body>
+</html>

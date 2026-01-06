@@ -1,0 +1,11 @@
+[
+    {
+        "email": "final.success@example.com",
+        "password": "password",
+        "first_name": "Final",
+        "last_name": "Success",
+        "phone": "1231231234",
+        "role": "borrower",
+        "joined_date": "2026-01-06 03:37:11.872251"
+    }
+]

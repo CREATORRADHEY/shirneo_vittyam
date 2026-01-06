@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShriNeo Vittiyam - Digital Lending Platform</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs"></div>
+
+    <nav class="glass glass-nav">
+        <div class="logo">
+            <img src="assets/logo.png" alt="" style="height: 50px; width: auto;">
+            <span data-i18n="brand">ShriNeo Vittiyam</span>
+        </div>
+        <div class="nav-links" style="margin-right: 1rem;">
+            <a href="index.html" class="nav-item" data-i18n="home">Home</a>
+            
+            <!-- Auth Only Links -->
+            <a href="dashboard.html" class="nav-item auth-view" style="display: none;" data-i18n="dash">Dashboard</a>
+            <a href="agent_dashboard.html" class="nav-item auth-view" style="display: none;" data-i18n="agent_dash">Agent Dashboard</a>
+            <a href="#" class="nav-item logout-btn auth-view" id="logout-btn" style="display: none;">
+                <span class="nav-icon">↪️</span> <span data-i18n="logout">Logout</span>
+            </a>
+
+            <!-- Guest Only Links -->
+            <div class="nav-item guest-view dropdown-container" style="position: relative; display: inline-block;">
+                <span style="cursor: pointer; color: rgba(255,255,255,0.9); font-weight: 500;">Partner with Us ▾</span>
+                <div class="dropdown-content" style="position: absolute; top: 100%; left: 0; background: white; min-width: 160px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 8px; display: none; overflow: hidden;">
+                    <a href="agent_signup.html" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid #eee;">Become an Agent</a>
+                    <a href="login.html?role=agent" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; font-size: 0.9rem;">Agent Login</a>
+                </div>
+            </div>
+
+            <a href="login.html" class="nav-item guest-view" data-i18n="login">Login</a>
+            <a href="signup.html" class="cta-button guest-view" data-i18n="signup">Sign Up</a>
+        </div>
+    </nav>
+    <script src="js/features.js"></script>
+    
+    <main>
+        <!-- Hero Section -->
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Your Dreams, Our <br>Responsibility</h1>
+                <p class="hero-subtitle">India's only platform for all your financial needs</p>
+                <p class="hero-tagline">Built for customers. Designed for agents. Supported by banks. Powered by trust.</p>
+                <div class="hero-actions">
+                    <a href="apply.html" class="btn-white">Apply for Loan &rarr;</a>
+                    <button onclick="window.startNeoVoice()" class="btn-voice pulse-animation">
+                        <span class="voice-icon">🎤</span> Hi Neo (Voice)
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="assets/hero_couple_illustration.png" alt="Happy Family" class="hero-illustration">
+            </div>
+        </section>
+
+
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" style="padding: 4rem 2rem;">
+            <div class="section-title">
+                <h2 data-i18n="how_works">How It Works</h2>
+                <p data-i18n="simple_steps">Get your loan in 4 simple steps</p>
+            </div>
+            <div class="steps-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+                <!-- Step 1 -->
+                <div class="glass step-card" style="padding: 2rem; text-align: center; position: relative;">
+                    <div class="step-icon" style="font-size: 2.5rem; margin-bottom: 1rem; background: rgba(37, 99, 235, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto;">📝</div>
+                    <h3 style="margin-bottom: 0.5rem;">1. Apply Online</h3>
+                    <p style="color: #64748B; font-size: 0.9rem;">Fill a simple form with basic details. No paperwork needed.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass step-card" style="padding: 2rem; text-align: center;">
+                    <div class="step-icon" style="font-size: 2.5rem; margin-bottom: 1rem; background: rgba(16, 185, 129, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto;">🔍</div>
+                    <h3 style="margin-bottom: 0.5rem;">2. Check Offers</h3>
+                    <p style="color: #64748B; font-size: 0.9rem;">Our AI matches you with the best offers from 20+ banks.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass step-card" style="padding: 2rem; text-align: center;">
+                    <div class="step-icon" style="font-size: 2.5rem; margin-bottom: 1rem; background: rgba(245, 158, 11, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto;">⚡</div>
+                    <h3 style="margin-bottom: 0.5rem;">3. Instant Approval</h3>
+                    <p style="color: #64748B; font-size: 0.9rem;">Complete V-KYC and get instant approval status.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass step-card" style="padding: 2rem; text-align: center;">
+                    <div class="step-icon" style="font-size: 2.5rem; margin-bottom: 1rem; background: rgba(239, 68, 68, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto;">💰</div>
+                    <h3 style="margin-bottom: 0.5rem;">4. Disbursal</h3>
+                    <p style="color: #64748B; font-size: 0.9rem;">Money transferred directly to your bank account.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section id="features">
+            <div class="section-title">
+                <h2 data-i18n="why_choose">Why Choose ShriNeo Vittiyam?</h2>
+                <p data-i18n="empowering">Empowering Bharat with accessible and transparent credit.</p>
+            </div>
+            <!-- New Features Grid -->
+            <div class="features-grid-new">
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>One platform for all banks/NBFCs</h3>
+                </div>
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>Available in your language</h3>
+                </div>
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>AI Assistant</h3>
+                </div>
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>AI-Integrated Security, Verification & Fraud Prevention Systems</h3>
+                </div>
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>CIBIL Score Check</h3>
+                </div>
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>Offline Brokers officially supported as Agents</h3>
+                </div>
+                <div class="glass feature-card-new">
+                    <div class="tick-icon">✓</div>
+                    <h3>100% Safe, Secure & RBI-compliant</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" style="background: rgba(255,255,255,0.05);">
+            <div class="section-title">
+                <h2 data-i18n="services">Our Financial Services</h2>
+                <p data-i18n="welcome">Comprehensive solutions for every need.</p>
+            </div>
+            <div class="grid-container">
+                <div class="glass feature-card">
+                    <h3 data-i18n="p_loan">Personal Loans</h3>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="p_loan_1">Low Interest Rates</span></div>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="p_loan_2">Flexible Tenure</span></div>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="p_loan_3">Instant Disbursal</span></div>
+                </div>
+                <div class="glass feature-card">
+                    <h3 data-i18n="b_loan">Business Loans</h3>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="b_loan_1">High Collateral Free Amount</span></div>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="b_loan_2">GST Based Loans</span></div>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="b_loan_3">Line of Credit</span></div>
+                </div>
+                <div class="glass feature-card">
+                    <h3 data-i18n="agent_prog">Agent Network</h3>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="agent_1">Earn Commissions</span></div>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="agent_2">Verified Partners</span></div>
+                    <div class="service-item"><span class="check-icon">✓</span> <span data-i18n="agent_3">Dashboard Access</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3 data-i18n="brand">ShriNeo Vittiyam</h3>
+                <p data-i18n="hero_tagline">India's trusted multilingual digital lending platform connecting borrowers with reliable lenders across urban and rural communities.</p>
+                <p style="color: #64748B; margin-top: 2rem;">
+                    <span data-i18n="hero_title">Your Dreams, Our Responsibility</span><br>
+                    Because everyone deserves the best
+                </p>
+                <div class="copyright" data-i18n="copyright">
+                    © 2026 ShriNeo Vittiyam. All rights reserved.
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="services">Services</h4>
+                <a href="#" data-i18n="loan_app">Loan Application</a>
+                <a href="#" data-i18n="loan_track">Loan Tracking</a>
+                <a href="#" data-i18n="emi_pay">EMI Payment</a>
+                <a href="#" data-i18n="agent_supp">Agent Support</a>
+                <a href="#" data-i18n="fin_serv">Financial Services</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="help_cen">Support</h4>
+                <a href="#" data-i18n="help_cen">Help Center</a>
+                <a href="#" data-i18n="contact_us">Contact Us</a>
+                <a href="#" data-i18n="faq">FAQ</a>
+                <a href="#" data-i18n="terms">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="about">Company</h4>
+                <a href="#" data-i18n="about_us">About Us</a>
+                <a href="#" data-i18n="priv_pol">Privacy Policy</a>
+                <a href="#" data-i18n="careers">Careers</a>
+                <a href="#" data-i18n="blog">Blog</a>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

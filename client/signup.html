@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ShriNeo Vittiyam</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            text-align: center;
+        }
+
+        .auth-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background: rgba(255,255,255,0.9);
+            margin-top: 0.4rem;
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .row .form-group {
+            flex: 1;
+        }
+
+        .optional-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-blobs"></div>
+
+    <!-- Forced Blue Nav for Visibility on this page -->
+    <nav class="glass glass-nav" style="background: #2563EB; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; border-radius: 0;">
+        <div class="logo">
+            <img src="assets/logo.png" alt="" style="height: 50px; width: auto;">
+            <span data-i18n="brand">ShriNeo Vittiyam</span>
+        </div>
+        <div class="nav-links" style="margin-right: 1rem;">
+            <a href="index.html" class="nav-item" data-i18n="home">Home</a>
+            <!-- Guest Only -->
+            <a href="login.html" class="nav-item guest-view" data-i18n="login">Login</a>
+        </div>
+    </nav>
+
+
+    <main class="auth-container" style="padding-top: 100px;"> <!-- Padding for sticky nav -->
+        <div class="glass auth-card">
+            <div class="auth-logo">SV</div>
+            <h2 data-i18n="signup" style="margin-bottom: 0.5rem; color: var(--text-main);">Sign Up</h2>
+            <p data-i18n="step1" style="margin-bottom: 2rem; color: var(--text-muted);">Step 1: Personal Details</p>
+            
+            <form action="verification.html"> 
+                <div class="row">
+                    <div class="form-group">
+                        <label data-i18n="first_name">First Name</label>
+                        <input type="text" data-i18n="first_name" required placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label><span data-i18n="middle_name">Middle Name</span></label>
+                        <input type="text" data-i18n="middle_name" placeholder="">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="last_name">Last Name</label>
+                    <input type="text" data-i18n="last_name" required placeholder="Doe">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label data-i18n="phone">Phone</label>
+                        <input type="tel" data-i18n="phone_ph" required placeholder="+91 XXXXX XXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="email_addr">Email</label>
+                        <input type="email" data-i18n="email_ph" required placeholder="john@example.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" data-i18n="pass_ph" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="confirm_pass">Confirm Password</label>
+                    <input type="password" data-i18n="pass_ph" required placeholder="••••••••">
+                </div>
+                
+                <!-- CAPTCHA Section -->
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label data-i18n="verify_human">Verify you are human</label>
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                        <canvas id="captcha-canvas" width="160" height="50" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem;"></canvas>
+                        <button id="refresh-captcha" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--primary-color);" title="Refresh CAPTCHA">
+                            ↻
+                        </button>
+                    </div>
+                    <input type="text" id="captcha-input" data-i18n="captcha_ph" placeholder="Enter characters from image" required style="letter-spacing: 2px;">
+                </div>
+
+                <div id="signup-error" style="display: none;"></div>
+                
+                <button type="submit" class="hero-cta" style="width: 100%; border-radius: 0.5rem; cursor:pointer;" data-i18n="next_verify">
+                    Next: Verification &rarr;
+                </button>
+            </form>
+
+            <div class="auth-footer" style="margin-top: 2rem;">
+                <span data-i18n="already_acc">Already have an account?</span> <a href="login.html" style="color: var(--primary-color); font-weight:600;" data-i18n="signin_link">Sign in</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/features.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/signup.js"></script>
+    <script src="js/fraud_monitor.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

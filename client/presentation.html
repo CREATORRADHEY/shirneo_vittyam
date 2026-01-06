@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShriNeo Vittiyam - Hackathon Pitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --accent: #16a34a;
+            --dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glow: 0 0 20px rgba(37, 99, 235, 0.3);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            background: #f8fafc;
+            color: var(--dark);
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        /* Animated Mesh Gradient Background */
+        .bg-mesh {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1), transparent 50%),
+                        radial-gradient(circle at 10% 10%, rgba(22, 163, 74, 0.1), transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.1), transparent 40%);
+            animation: rotateMesh 30s linear infinite;
+            z-index: -2;
+        }
+
+        @keyframes rotateMesh {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            z-index: -1;
+            transition: transform 0.2s ease-out; /* For parallax */
+        }
+        .blob-1 { top: 10%; left: 10%; width: 400px; height: 400px; background: #bfdbfe; }
+        .blob-2 { bottom: 10%; right: 10%; width: 500px; height: 500px; background: #bbf7d0; }
+        .blob-3 { top: 40%; left: 60%; width: 300px; height: 300px; background: #fed7aa; }
+
+        /* Slides Container */
+        .slides-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateZ(-200px) rotateX(10deg);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+            padding: 4rem;
+            box-sizing: border-box;
+            filter: blur(10px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateZ(0) rotateX(0deg);
+            pointer-events: all;
+            filter: blur(0);
+        }
+
+        .slide.prev {
+            opacity: 0;
+            transform: translateY(-100px) translateZ(-100px);
+            filter: blur(5px);
+        }
+
+        .slide.next {
+            opacity: 0;
+            transform: translateY(100px) translateZ(-100px);
+            filter: blur(5px);
+        }
+
+        /* Content Animations */
+        .animate-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .slide.active .animate-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger Delays */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Typography */
+        h1 {
+            font-size: 6rem;
+            margin: 0;
+            background: linear-gradient(135deg, #2563EB 0%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -3px;
+            text-align: center;
+            text-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: #475569;
+            font-weight: 400;
+            margin-top: 1.5rem;
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Glass Cards with 3D Tilt */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(37, 99, 235, 0.15);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: var(--primary);
+        }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover .icon {
+            transform: scale(1.3) rotate(5deg);
+        }
+
+        /* Stat Boxes */
+        .stat-container {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #2563EB, #1d4ed8);
+            color: white;
+            padding: 2.5rem 3rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-red {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Problem/Solution Split */
+        .split-layout {
+            display: flex;
+            gap: 5rem;
+            align-items: center;
+            max-width: 1400px;
+            width: 100%;
+        }
+        .half { flex: 1; }
+
+        /* Chat Demo Mockup */
+        .phone-mockup {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 4px solid #f1f5f9;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .chat-bubble {
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .chat-user {
+            background: #f1f5f9;
+            color: #475569;
+            border-bottom-left-radius: 0;
+            margin-right: auto;
+            width: 80%;
+        }
+
+        .chat-bot {
+            background: #2563EB;
+            color: white;
+            border-bottom-right-radius: 0;
+            margin-left: auto;
+            width: 80%;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: white;
+            color: var(--dark);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+            background: var(--primary);
+            color: white;
+        }
+
+        .progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #2563EB, #16a34a);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-mesh"></div>
+    <div class="blob blob-1" id="blob1"></div>
+    <div class="blob blob-2" id="blob2"></div>
+    <div class="blob blob-3" id="blob3"></div>
+
+    <div class="slides-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <img src="assets/logo.png" alt="Logo" class="animate-up" style="width: 140px; margin-bottom: 2rem; filter: drop-shadow(0 10px 20px rgba(37, 99, 235, 0.2));">
+            <h1 class="animate-up delay-1">ShriNeo Vittiyam</h1>
+            <h3 class="animate-up delay-2">First-of-its-kind <span style="color: var(--primary); font-weight: 700;">End-to-End</span> & <span style="color: var(--accent); font-weight: 700;">Fraud Detection</span> Digital Lending Platform</h3>
+            
+            <div class="animate-up delay-3" style="margin-top: 4rem; padding: 1.2rem 2.5rem; background: white; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); font-weight: 600; color: #475569; display: flex; align-items: center; gap: 1rem;">
+                <span style="font-size: 1.5rem;">🎯</span> 
+                Theme: AI for Employment, Safety & Digital Trust
+            </div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide">
+            <h2 class="animate-up">The "Bharat" Reality</h2>
+            <div class="split-layout">
+                <div class="half animate-up delay-1">
+                    <div class="stat-box highlight-red">
+                        <span class="stat-number">70%</span>
+                        of Rural Indians lack formal credit access
+                    </div>
+                    <div style="margin-top: 2rem; font-size: 1.25rem; color: #475569; text-align: center;">
+                        "I am scared of English forms."
+                    </div>
+                </div>
+                <div class="half animate-up delay-2">
+                    <div class="card" style="text-align: left;">
+                        <div class="icon">😰</div>
+                        <h3 style="text-align: left; margin: 0; font-weight: 700;">The Fear Factor</h3>
+                        <p style="font-size: 1.2rem; color: #64748B; margin-top: 1rem;">
+                            Complex documentation, language barriers, and fear of hidden charges drive them to predatory loan sharks charging <strong>50%+ interest</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Solution -->
+        <div class="slide">
+            <h2 class="animate-up">Our Solution</h2>
+            <h3 class="animate-up delay-1">An AI-First Aggregator that treats you like a Human, not a File Number.</h3>
+            
+            <div class="feature-grid">
+                <div class="card animate-up delay-2">
+                    <div class="icon">🗣️</div>
+                    <h4>Vernacular AI</h4>
+                    <p style="color: #64748B;">Talk to "Neo" in Hindi/Hinglish. No forms, just conversation.</p>
+                </div>
+                <div class="card animate-up delay-3">
+                    <div class="icon">🛡️</div>
+                    <h4>Digital Trust</h4>
+                    <p style="color: #64748B;">Invisible Fraud Detection using typing speed & device fingerprints.</p>
+                </div>
+                <div class="card animate-up delay-4">
+                    <div class="icon">🤝</div>
+                    <h4>Sahayak Network</h4>
+                    <p style="color: #64748B;">Creating jobs for local agents who bridge the digital divide.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: "Neo" AI Demo -->
+        <div class="slide">
+            <div class="split-layout">
+                <div class="half animate-up">
+                    <h2 style="text-align: left; margin-bottom: 1rem;">Meet "Neo" 🤖</h2>
+                    <h3 style="text-align: left; color: var(--primary); margin-top: 0;">Vernacular Voice Assistant</h3>
+                    <p style="font-size: 1.3rem; color: #64748B; line-height: 1.6;">
+                        High-fidelity <strong>Voice-to-Voice</strong> interaction powered by Llama 3.1 & Web Speech API. Neo understands Hinglish, provides financial advice, and navigates the app for you.
+                    </p>
+                    <ul style="font-size: 1.2rem; color: #475569; margin-top: 2rem; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;">✅ <strong>Hinglish Support:</strong> "Mujhe dukan ke liye loan chahiye"</li>
+                        <li style="margin-bottom: 1rem;">✅ <strong>Voice First:</strong> Hands-free navigation & context</li>
+                        <li style="margin-bottom: 1rem;">✅ <strong>Agentic:</strong> Doesn't just talk—it takes action</li>
+                    </ul>
+                </div>
+                <div class="half animate-up delay-2">
+                    <div class="phone-mockup" style="position: relative;">
+                         <div style="position: absolute; top: 10px; right: 20px; font-size: 1.5rem; animation: pulse 2s infinite;">🎙️</div>
+                        <div class="chat-bubble chat-user">
+                            <strong>User:</strong> Mujhe dukan ke liye loan chahiye.
+                        </div>
+                        <div class="chat-bubble chat-bot">
+                            <strong>Neo:</strong> Namaste! 🙏 Business loan ke liye main apki madat karunga. <br><br>Apki dukan kahan hai aur mahine ki kamai kitni hai?
+                        </div>
+                         <div class="chat-bubble chat-user">
+                            <strong>User:</strong> Jaipur mein hai, 50k bach jaata hai.
+                        </div>
+                        <div class="chat-bubble chat-bot">
+                            <strong>Neo:</strong> Bahut badhiya! ✅<br>Aapke liye <strong>₹5 Lakh</strong> tak ka loan pre-approved hai HDFC se.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Digital Trust & Security (NEW) -->
+        <div class="slide">
+            <h2 class="animate-up">Digital Trust Infrastructure 🛡️</h2>
+            <h3 class="animate-up delay-1">Multimodal Fraud Detection & Frictionless Onboarding</h3>
+            
+            <div class="feature-grid">
+                <div class="card animate-up delay-2">
+                    <div class="icon">📄</div>
+                    <h4>AI OCR Engine</h4>
+                    <p style="color: #64748B; font-size: 1rem;">Auto-extracts text from <strong>PAN & Aadhaar</strong> cards with 95%+ accuracy. No manual entry.</p>
+                </div>
+                <div class="card animate-up delay-3">
+                    <div class="icon">📊</div>
+                    <h4>Smart Risk Score</h4>
+                    <p style="color: #64748B; font-size: 1rem;">Real-time <strong>0-100 Risk Engine</strong> analyzing device IDs, behavior, and KYC signals.</p>
+                </div>
+                <div class="card animate-up delay-4">
+                    <div class="icon">😊</div>
+                    <h4>Smile-to-Verify</h4>
+                    <p style="color: #64748B; font-size: 1rem;"><strong>Liveness Detection</strong> that only captures when a user smiles—preventing identity theft.</p>
+                </div>
+            </div>
+            
+            <!-- Dashboard Mockup Snippet -->
+            <div class="animate-up delay-5" style="margin-top: 3rem; width: 100%; max-width: 800px; background: white; padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; border-left: 6px solid #ef4444;">
+                <div style="text-align: left;">
+                    <span style="display: block; font-size: 0.8rem; color: #64748B; text-transform: uppercase; font-weight: 700;">Fraud Risk Profile</span>
+                    <span style="font-size: 1.5rem; font-weight: 800; color: #1e293b;">High Risk detected</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 150px; height: 8px; background: #fee2e2; border-radius: 4px; overflow: hidden;">
+                        <div style="width: 85%; height: 8px; background: #ef4444;"></div>
+                    </div>
+                    <span style="font-weight: 700; color: #ef4444;">85/100</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Sahayak (Agent) Digitalization -->
+        <div class="slide">
+            <h2 class="animate-up">The "Sahayak" Revolution 🤝</h2> 
+            <h3 class="animate-up delay-1" style="color: var(--accent);">Empowering the Last Mile Human Connection</h3>
+            
+            <div class="split-layout">
+                <div class="half animate-up delay-2">
+                    <div class="card" style="text-align: left; background: rgba(255, 255, 255, 0.9);">
+                        <div class="icon" style="font-size: 3rem;">🆔</div>
+                        <h3 style="text-align: left; margin: 0; font-weight: 700; color: var(--dark);">Verified Digital ID</h3>
+                        <p style="font-size: 1.1rem; color: #64748B; margin-top: 1rem;">
+                            Every agent gets a verified <strong>Digital Identity</strong>. Users can scan their QR code to verify them instantly on-chain/platform.
+                        </p>
+                    </div>
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: #ecfdf5; border-radius: 1rem; border-left: 5px solid var(--accent);">
+                        <strong style="color: var(--accent); font-size: 1.2rem;">Financial Inclusion:</strong>
+                        <p style="margin: 0.5rem 0; color: #065f46;">Converting local youth into <strong>Neo-Bankers</strong>, earning reliable commissions through a transparent fee structure.</p>
+                    </div>
+                </div>
+
+                <div class="half animate-up delay-3">
+                    <!-- ID Card Mockup -->
+                    <div style="background: white; border-radius: 1.5rem; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
+                        <div style="background: var(--accent); height: 80px; position: absolute; top: 0; left: 0; width: 100%;"></div>
+                        <div style="position: relative; z-index: 1; text-align: center; margin-top: 2rem;">
+                            <div style="width: 100px; height: 100px; background: #cbd5e1; border-radius: 50%; margin: 0 auto; border: 4px solid white; display: flex; align-items: center; justify-content: center; font-size: 2rem;">👤</div>
+                            <h2 style="margin: 1rem 0 0.5rem 0; font-size: 2rem;">Rahul Kumar</h2>
+                            <p style="margin: 0; color: var(--accent); font-weight: 700;">Verified Sahayak</p>
+                            <p style="color: #64748B; font-size: 0.9rem;">ID: SAH-2026-8821</p>
+                            
+                            <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 2rem 0;">
+                            
+                            <div style="display: flex; justify-content: space-between; text-align: left;">
+                                <div>
+                                    <span style="display: block; font-size: 0.8rem; color: #64748B;">People Helped</span>
+                                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">124</span>
+                                </div>
+                                <div>
+                                    <span style="display: block; font-size: 0.8rem; color: #64748B;">Trust Score</span>
+                                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">4.9/5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Tech Stack -->
+        <div class="slide">
+            <h2 class="animate-up">Built With 🛠️</h2>
+            <div class="feature-grid" style="grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                <div class="card animate-up delay-1">
+                    <div class="icon">🧠</div>
+                    <h4>Llama 3.1 8B</h4>
+                    <p style="font-size: 0.9rem; color: #64748B;">Hinglish LLM via Groq</p>
+                </div>
+                <div class="card animate-up delay-2">
+                    <div class="icon">✨</div>
+                    <h4>EasyOCR</h4>
+                    <p style="font-size: 0.9rem; color: #64748B;">Doc Extraction with Torch</p>
+                </div>
+                <div class="card animate-up delay-3">
+                    <div class="icon">⚡</div>
+                    <h4>FastAPI</h4>
+                    <p style="font-size: 0.9rem; color: #64748B;">Async Core Engine</p>
+                </div>
+                <div class="card animate-up delay-4">
+                    <div class="icon">🎥</div>
+                    <h4>face-api.js</h4>
+                    <p style="font-size: 0.9rem; color: #64748B;">On-device Computer Vision</p>
+                </div>
+            </div>
+            
+            <div class="animate-up delay-5" style="margin-top: 4rem; display: flex; gap: 3rem; opacity: 0.7;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg" alt="TF" style="height: 40px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/PyTorch_logo_icon.svg" alt="Torch" style="height: 40px;">
+                <img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI" style="height: 40px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Selenium_Logo.png" alt="Selenium" style="height: 40px; filter: grayscale(1);">
+            </div>
+        </div>
+
+        <!-- Slide 8: Conclusion -->
+        <div class="slide">
+            <h2 class="animate-up" style="font-size: 2rem; color: var(--primary);">ShriNeo Vittiyam</h2>
+            <h1 class="animate-up delay-1" style="font-size: 5rem; margin-top: 1rem;">Democratizing Credit<br>for India's Next Billion</h1>
+            
+            <div class="animate-up delay-3" style="margin-top: 4rem; display: flex; gap: 2rem;">
+                <a href="index.html" style="background: var(--primary); color: white; padding: 1.2rem 3rem; border-radius: 50px; text-decoration: none; font-size: 1.4rem; font-weight: 700; box-shadow: 0 20px 40px rgba(37, 99, 235, 0.4); transition: transform 0.2s;">
+                    Launch Demo 🚀
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="controls">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.querySelector('.progress-bar');
+        
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            document.getElementById('blob1').style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+            document.getElementById('blob2').style.transform = `translate(${-x * 40}px, ${-y * 40}px)`;
+            document.getElementById('blob3').style.transform = `translate(${x * 20}px, ${-y * 20}px)`;
+        });
+
+        function update() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active', 'prev', 'next');
+                
+                // Force Reflow for Transition Reset (Optional but cleaner)
+                const animatedElements = slide.querySelectorAll('.animate-up');
+                if(idx === current) {
+                     animatedElements.forEach(el => {
+                        el.style.opacity = '0';
+                        el.offsetHeight; // trigger reflow
+                        el.style.opacity = '';
+                    });
+                }
+
+                if (idx === current) {
+                    slide.classList.add('active');
+                } else if (idx < current) {
+                    slide.classList.add('prev');
+                } else {
+                    slide.classList.add('next');
+                }
+            });
+            progress.style.width = ((current + 1) / slides.length) * 100 + '%';
+        }
+
+        function nextSlide() {
+            if (current < slides.length - 1) {
+                current++;
+                update();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                update();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        update();
+    </script>
+</body>
+</html>

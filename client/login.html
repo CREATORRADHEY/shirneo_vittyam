@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ShriNeo Vittiyam</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            text-align: center;
+        }
+
+        .auth-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background: rgba(255,255,255,0.9);
+            margin-top: 0.5rem;
+        }
+
+        .auth-footer {
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-blobs"></div>
+
+    <!-- Utility Classes for Nav -->
+    <nav class="glass glass-nav nav-solid-blue">
+        <div class="logo">
+            <img src="assets/logo.png" alt="" style="height: 50px; width: auto;">
+            <span data-i18n="brand">ShriNeo Vittiyam</span>
+        </div>
+        <div class="nav-links" style="margin-right: 1rem;">
+            <a href="index.html" class="nav-item" data-i18n="home">Home</a>
+            <!-- Guest Only -->
+            <a href="signup.html" class="cta-button guest-view" data-i18n="signup">Sign Up</a>
+        </div>
+    </nav>
+    <script src="js/features.js"></script>
+
+    <main class="auth-container" style="padding-top: 100px;">
+        <div class="glass auth-card">
+            <div class="auth-logo">SV</div>
+            <h2 data-i18n="login" style="margin-bottom: 0.5rem; color: var(--text-main);">Login</h2>
+            
+            <!-- Role Toggle using Utility Classes -->
+            <div class="role-toggle-group">
+                <button type="button" id="role-borrower" class="role-btn active">Borrower</button>
+                <button type="button" id="role-agent" class="role-btn">Agent (Sahayak)</button>
+            </div>
+
+            <form id="login-form">
+                <input type="hidden" id="selected-role" value="borrower">
+                <div class="form-group">
+                    <label data-i18n="email_addr">Email Address</label>
+                    <input type="email" id="email" data-i18n="email_ph" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="password" data-i18n="pass_ph" required placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="hero-cta" style="width: 100%; border-radius: 0.5rem; cursor:pointer;" data-i18n="login">
+                    Sign In
+                </button>
+            </form>
+
+            <script src="js/config.js"></script>
+            <script>
+                // Role Toggle Logic
+                const roleBorrower = document.getElementById('role-borrower');
+                const roleAgent = document.getElementById('role-agent');
+                const roleInput = document.getElementById('selected-role');
+
+                function setRole(role) {
+                    roleInput.value = role;
+                    // Class-based toggling
+                    if(role === 'borrower') {
+                        roleBorrower.classList.add('active');
+                        roleAgent.classList.remove('active');
+                    } else {
+                        roleAgent.classList.add('active');
+                        roleBorrower.classList.remove('active');
+                    }
+                }
+
+                roleBorrower.addEventListener('click', () => setRole('borrower'));
+                roleAgent.addEventListener('click', () => setRole('agent'));
+
+                // Check URL params for role
+                const urlParams = new URLSearchParams(window.location.search);
+                if(urlParams.get('role') === 'agent') {
+                    setRole('agent');
+                }
+
+                document.getElementById('login-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const role = roleInput.value;
+                    const btn = this.querySelector('button[type="submit"]');
+
+                    if(!email || !password) {
+                        alert("Please enter both email and password");
+                        return;
+                    }
+
+                    // MOCK LOGIN SUCCESS
+                    btn.textContent = "Signing In...";
+                    btn.disabled = true;
+
+                    setTimeout(() => {
+                        localStorage.setItem('token', 'mock_token_' + Date.now());
+                        localStorage.setItem('user_role', role);
+                        localStorage.removeItem('demo_mode');
+
+                        if(role === 'agent') {
+                            window.location.href = 'agent_dashboard.html';
+                        } else {
+                            window.location.href = 'dashboard.html';
+                        }
+                    }, 500);
+                });
+            </script>
+
+            <div class="auth-footer">
+                <span data-i18n="dont_have_acc">Don't have an account?</span> <a href="signup.html" data-i18n="signup_link">Sign up</a>
+            </div>
+        </div>
+    </main>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>
