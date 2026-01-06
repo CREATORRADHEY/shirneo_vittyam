@@ -1,6 +1,5 @@
 const CONFIG = {
-    API_BASE_URL: 'http://localhost:8000',
-    // API_BASE_URL: 'https://api.shrineo.in', // Production URL example
+    API_BASE_URL: 'https://shirneo-vittyam.onrender.com',
     
     // Feature Flags
     ENABLE_DEMO_MODE: true,

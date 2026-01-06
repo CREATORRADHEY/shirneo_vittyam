@@ -47,6 +47,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "ShriNeo Vittiyam Backend is Running!"}
+
 # Configure Groq API (Open Source LLM Host)
 # Get your free key from: https://console.groq.com
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")

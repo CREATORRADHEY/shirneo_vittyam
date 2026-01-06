@@ -1946,5 +1946,39 @@
             "score": 0
         },
         "date": "2026-01-06"
+    },
+    {
+        "fullName": "Raj Sharma",
+        "phone": "98765 43210",
+        "pan": "1wdefrff",
+        "employmentType": "Salaried",
+        "income": "455667899",
+        "amount": "345667889",
+        "loanType": "Personal Loan",
+        "fraud_signals": {
+            "paste_count": 0,
+            "tab_switches": 0,
+            "keystrokes": 27,
+            "backspaces": 0,
+            "time_to_fill": 31,
+            "device_hash": "5abb00db",
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+            "screen_res": "1440x900",
+            "is_bot": false
+        },
+        "session_id": "95r64f",
+        "risk_score": 18,
+        "id": "5D0E3E57",
+        "trust_score": 95,
+        "financial_score": 95,
+        "fraud_score": 0,
+        "risk_flags": [],
+        "device_hash": "5abb00db",
+        "status": "Approved",
+        "verification": {
+            "status": "Not Verified",
+            "score": 0
+        },
+        "date": "2026-01-06"
     }
 ]
