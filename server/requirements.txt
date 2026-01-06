@@ -2,7 +2,11 @@ fastapi
 uvicorn
 google-generativeai
 python-dotenv
-opencv-python
+opencv-python-headless
 numpy
 ultralytics
 requests
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+easyocr
